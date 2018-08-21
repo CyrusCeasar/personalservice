@@ -7,7 +7,7 @@ def getlist(obj):
     return None if len(obj) == 0 else list(obj)
 
 
-def page_infilter(obj, page, pagesize=10):
+def page_infilter(obj, page, pagesize=20):
     paginator = Paginator(obj, pagesize)
     try:
         result_list = paginator.page(page)

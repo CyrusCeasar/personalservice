@@ -65,7 +65,7 @@ def list(request):
         record_list = TranslateRecord.objects.filter(is_deleted=False).order_by('-last_quest_date').values()
     elif type == 1:
         print(type)
-        record_list = TranslateRecord.objects.filter(is_deleted=False).order_by('quest_num').values()
+        record_list = TranslateRecord.objects.filter(is_deleted=False).order_by('-quest_num').values()
     else:
         record_list = TranslateRecord.objects.filter(is_deleted=False).order_by('-last_quest_date').values()
 
