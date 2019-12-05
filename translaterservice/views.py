@@ -12,10 +12,12 @@ def query(request):
     print(request.body)
     print(request.path_info)
     print(request.GET)
-    words = request.GET['words']
+    data = request.body
+    words = data.GET['words']
     print(words)
-    src_content = request.GET['src_content']
-    display_content = request.GET['display_content']
+    src_content = data.GET['src']
+    display_content = data.GET['show_content']
+
     try:
         trs = TranslateRecord.objects.get(words_text=words)
         trs.quest_num += 1
