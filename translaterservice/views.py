@@ -3,19 +3,19 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 from django.http import JsonResponse
 from base.utils import *
+import json
 
 def query(request):
     print(request)
     print("````````````")
     print(request.headers)
     print("````````````")
-    print(request.body)
-    print("````````````")
-    print(request.POST)
-    words = request.POST["words"]
-    print(words)
-    src_content = request.POST['src']
-    display_content = request.POST['show_content']
+    datas = json.loads(request.body)
+    print(datas)
+
+    words = datas['words']
+    src_content = datas['src']
+    display_content = datas['show_content']
 
     try:
         trs = TranslateRecord.objects.get(words_text=words)
