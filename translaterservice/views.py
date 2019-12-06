@@ -13,10 +13,10 @@ def query(request):
     print(request.path_info)
     print(request.GET)
     data = request.body
-    words = data.GET['words']
+    words = data['words']
     print(words)
-    src_content = data.GET['src']
-    display_content = data.GET['show_content']
+    src_content = data['src']
+    display_content = data['show_content']
 
     try:
         trs = TranslateRecord.objects.get(words_text=words)
