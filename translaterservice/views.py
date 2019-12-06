@@ -6,17 +6,16 @@ from base.utils import *
 
 def query(request):
     print(request)
-    print(request.method)
-    print(request.content_type)
-    print(request.content_params)
+    print("````````````")
+    print(request.headers)
+    print("````````````")
     print(request.body)
-    print(request.path_info)
-    print(request.GET)
-    data = request.body
-    words = data['words']
+    print("````````````")
+    print(request.POST)
+    words = request.POST["words"]
     print(words)
-    src_content = data['src']
-    display_content = data['show_content']
+    src_content = request.POST['src']
+    display_content = request.POST['show_content']
 
     try:
         trs = TranslateRecord.objects.get(words_text=words)
