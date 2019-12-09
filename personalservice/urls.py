@@ -15,15 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from translaterservice import views
+from translaterservice import translate_records
+from translaterservice import sever_manger
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('translate_record/list', views.list),
-    path('translate_record/query', views.query),
-    path('translate_record/delete', views.delete),
-    path('translate_record/remove', views.remove),
-    path('translate_record/deleted_list', views.deleted_list),
-    path('translate_record/remebered_list', views.rembered_list),
-    path('translate_record/rembered', views.rembered)
+    path('translate_record/list', translate_records.list),
+    path('translate_record/query', translate_records.query),
+    path('translate_record/delete', translate_records.delete),
+    path('translate_record/remove', translate_records.remove),
+    path('translate_record/deleted_list', translate_records.deleted_list),
+    path('translate_record/remebered_list', translate_records.rembered_list),
+    path('translate_record/rembered', translate_records.rembered),
+
+    path('server/mem', sever_manger.getMemUsage),
+    path('server/cpu', sever_manger.getCpuUsuage),
 ]
