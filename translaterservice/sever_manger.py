@@ -19,12 +19,12 @@ def getMemUsage(request):
 
 
 def getCpuUsuage(request):
-    result = subprocess.run(['mpstat'], stdout=subprocess.PIPE).stdout.decode('utf-8').split()
+    result = subprocess.run(['mpstat'], stdout=subprocess.PIPE).stdout.decode('utf-8')
     return JsonResponse(Result(RESULT_SUCCESS, "成功获取").getJsonStr(result))
 
 
 def ps(request):
-    result = subprocess.run(['ps', '-ejf'], stdout=subprocess.PIPE).stdout.decode('utf-8').split()
+    result = subprocess.run(['ps', '-ejf'], stdout=subprocess.PIPE).stdout.decode('utf-8')
     return JsonResponse(Result(RESULT_SUCCESS, "成功获取").getJsonStr(result))
 
 
