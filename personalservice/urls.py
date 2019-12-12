@@ -30,4 +30,6 @@ urlpatterns = [
 
     path('server/mem', sever_manger.getMemUsage),
     path('server/cpu', sever_manger.getCpuUsuage),
+    path('server/last', sever_manger.last),
+    path('server/ps', sever_manger.ps)
 ]
