@@ -14,12 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from translaterservice import translate_records
+from rest_framework.authtoken.views import obtain_auth_token
 from translaterservice import sever_manger
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
+
     path('translate_record/list', translate_records.list),
     path('translate_record/query', translate_records.query),
     path('translate_record/delete', translate_records.delete),
@@ -28,8 +31,10 @@ urlpatterns = [
     path('translate_record/remebered_list', translate_records.rembered_list),
     path('translate_record/rembered', translate_records.rembered),
 
-    path('server/mem', sever_manger.getMemUsage),
-    path('server/cpu', sever_manger.getCpuUsuage),
-    path('server/last', sever_manger.last),
-    path('server/ps', sever_manger.ps)
+    path('server/mem', sever_manger.ServerView.as_view(), name='getMemUsage'),
+    path('server/cpu', sever_manger.ServerView.as_view(), name='getCpuUsuage'),
+    path('server/last', sever_manger.ServerView.as_view(), name='last'),
+    path('server/ps', sever_manger.ServerView.as_view(), name='ps'),
+    path('server/df', sever_manger.ServerView.as_view(), name='df'),
+    path('server/helloWorld', sever_manger.ServerView.as_view(), name='helloWorld')
 ]
