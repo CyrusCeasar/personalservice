@@ -41,10 +41,13 @@ INSTALLED_APPS = [
 
     'translaterservice'
 ]
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
 
+# token authentication options
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+        'rest_framework.authentication.TokenAuthentication',
     ],
 }
 
@@ -52,13 +55,39 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-  #  'django.middleware.csrf.CsrfViewMiddleware',
+    #  'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# redis config options
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        }
+
+    }
+}
+DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
+DJANGO_REDIS_IGNORE_EXCEPTIONS = True
+
+
 ROOT_URLCONF = 'personalservice.urls'
+
+# email config options
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'mesakong.k@gmail.com'
+# EMAIL_HOST_PASSWORD = 'Google.2658457'
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_HOST_USER = '412644382@qq.com'
+EMAIL_HOST_PASSWORD = 'Google.2658457'
+EMAIL_PORT = 587
 
 TEMPLATES = [
     {

@@ -25,26 +25,44 @@ def getVpsCacheUsage():
 
 
 class ServerView(APIView):
-    permission_classes = (IsAuthenticated, Response(Result(-1, "成功获取")))
+    permission_classes = (IsAuthenticated,)
 
     def helloWorld(self):
-        return Response(Result(RESULT_SUCCESS, "成功获取"))
+        return Response(Result(RESULT_SUCCESS, "成功获取").getJsonStr())
 
-    def getMemUsage(self, request):
+    def getMemUsage(self):
         return Response(Result(RESULT_SUCCESS, "成功获取").getJsonStr(getVpsCacheUsage()))
 
-    def getCpuUsuage(self, request):
+    def getCpuUsuage(self):
         result = subprocess.run(['mpstat'], stdout=subprocess.PIPE).stdout.decode(UTF_8).splitlines()
         return Response(Result(RESULT_SUCCESS, "成功获取").getJsonStr(result))
 
-    def ps(self, request):
+    def ps(self):
         result = subprocess.run(['ps', '-ejf'], stdout=subprocess.PIPE).stdout.decode(UTF_8).splitlines()
         return Response(Result(RESULT_SUCCESS, "成功获取").getJsonStr(result))
 
-    def last(self, request):
+    def last(self):
         result = os.popen('last | grep "logged in"').read().splitlines()
         return Response(Result(RESULT_SUCCESS, "成功获取").getJsonStr(result))
 
-    def df(self, request):
+    def df(self):
         result = subprocess.run(['df', '-h'], stdout=subprocess.PIPE).stdout.decode(UTF_8).splitlines()
         return Response(Result(RESULT_SUCCESS, "成功获取").getJsonStr(result))
+
+    def get(self,request):
+        type = request.GET.get('type')
+        if type == 'cpu':
+           return self.getCpuUsuage()
+        elif type == 'ps':
+            return self.ps()
+        elif type== 'mem':
+            return  self.getMemUsage()
+        elif type== 'last':
+            return  self.last()
+        elif type=='df':
+            return self.df()
+        else:
+            self.helloWorld()
+
+
+

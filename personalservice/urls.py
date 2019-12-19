@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from translaterservice import translate_records
+from translaterservice import translate_records, user
 from rest_framework.authtoken.views import obtain_auth_token
 from translaterservice import sever_manger
 
@@ -31,10 +31,10 @@ urlpatterns = [
     path('translate_record/remebered_list', translate_records.rembered_list),
     path('translate_record/rembered', translate_records.rembered),
 
-    path('server/mem', sever_manger.ServerView.as_view(), name='getMemUsage'),
-    path('server/cpu', sever_manger.ServerView.as_view(), name='getCpuUsuage'),
-    path('server/last', sever_manger.ServerView.as_view(), name='last'),
-    path('server/ps', sever_manger.ServerView.as_view(), name='ps'),
-    path('server/df', sever_manger.ServerView.as_view(), name='df'),
-    path('server/helloWorld', sever_manger.ServerView.as_view(), name='helloWorld')
+    path('user/hello', user.hello),
+    path('user/createUserStep1', user.createUserStep1),
+    path('user/createUserStep2', user.createUserStep2),
+    path('user/all', user.users),
+
+    path('server/info', sever_manger.ServerView.as_view(), name='get')
 ]
