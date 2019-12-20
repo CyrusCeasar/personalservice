@@ -1,28 +1,31 @@
-from .models import TranslateRecord
-from django.core.exceptions import ObjectDoesNotExist
-from django.utils import timezone
-from django.http import JsonResponse
-from base.utils import *
 import json
+
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
+from django.utils import timezone
+
+from base.utils import *
+from .models import TranslateRecord
+
 
 def query(request):
     print(request)
     print("````````````")
     print(request.headers)
     print("````````````")
-    datas = json.loads(request.body)
-    print(datas)
+    data = json.loads(request.body)
+    print(data)
 
-    words = datas['words']
-    src_content = datas['src']
-    display_content = datas['show_content']
+    words = data['words']
+    src_content = data['src']
+    display_content = data['show_content']
 
     try:
         trs = TranslateRecord.objects.get(words_text=words)
         trs.quest_num += 1
         trs.last_quest_date = timezone.now()
         trs.save()
-        return JsonResponse(Result(RESULT_SUCCESS, "成功创建").getJsonStr())
+        return JsonResponse(Result(RESULT_SUCCESS, "成功创建").get_json_str())
     except ObjectDoesNotExist:
         trs = TranslateRecord()
         trs.words_text = words
@@ -31,53 +34,52 @@ def query(request):
         trs.display_content = display_content
         trs.save()
         # queryset.values() --> dict
-        return JsonResponse(Result(RESULT_SUCCESS, "成功更新").getJsonStr())
+        return JsonResponse(Result(RESULT_SUCCESS, "成功更新").get_json_str())
 
 
 def delete(request):
     words = request.GET['words']
     TranslateRecord.objects.filter(words_text=words).update(is_deleted=True)
-    return JsonResponse(Result(RESULT_SUCCESS, "删除成功").getJsonStr())
+    return JsonResponse(Result(RESULT_SUCCESS, "删除成功").get_json_str())
 
 
-def rembered(request):
+def remembered(request):
     words = request.GET['words']
     TranslateRecord.objects.filter(words_text=words).update(is_rembered=True)
-    return JsonResponse(Result(RESULT_SUCCESS, "已成功记住").getJsonStr())
+    return JsonResponse(Result(RESULT_SUCCESS, "已成功记住").get_json_str())
 
 
 def deleted_list(request):
-    record_list = TranslateRecord.objects.filter(is_deleted=True).values()
-    return JsonResponse(Result(RESULT_SUCCESS, "查询成功").getJsonStr(getlist(record_list)))
+    lists = TranslateRecord.objects.filter(is_deleted=True).values()
+    return JsonResponse(Result(RESULT_SUCCESS, "查询成功").get_json_str(getlist(lists)))
 
 
-def rembered_list(request):
-    record_list = TranslateRecord.objects.filter(is_rembered=True).values()
-    return JsonResponse(Result(RESULT_SUCCESS, "查询成功").getJsonStr(getlist(record_list)))
+def remembered_list(request):
+    lists = TranslateRecord.objects.filter(is_rembered=True).values()
+    return JsonResponse(Result(RESULT_SUCCESS, "查询成功").get_json_str(getlist(lists)))
 
 
-def list(request):
+def record_list(request):
     page = request.GET.get('page')
-    type =  int(request.GET.get('type'))
+    t = int(request.GET.get('type'))
 
-
-    print(type)
-    if type == 0:
-        record_list = TranslateRecord.objects.filter(is_deleted=False).order_by('-last_quest_date').values()
-    elif type == 1:
-        print(type)
-        record_list = TranslateRecord.objects.filter(is_deleted=False).order_by('-quest_num').values()
+    print(t)
+    if t == 0:
+        lists = TranslateRecord.objects.filter(is_deleted=False).order_by('-last_quest_date').values()
+    elif t == 1:
+        print(t)
+        lists = TranslateRecord.objects.filter(is_deleted=False).order_by('-quest_num').values()
     else:
-        record_list = TranslateRecord.objects.filter(is_deleted=False).order_by('-last_quest_date').values()
+        lists = TranslateRecord.objects.filter(is_deleted=False).order_by('-last_quest_date').values()
 
-    response = JsonResponse(page_infilter(record_list, page))
+    response = JsonResponse(get_page(lists, page))
     return response
 
 
 def remove(request):
     words = request.GET['words']
     TranslateRecord.objects.filter(words_text=words).delete()
-    return JsonResponse(Result(RESULT_SUCCESS, "删除成功").getJsonStr())
+    return JsonResponse(Result(RESULT_SUCCESS, "删除成功").get_json_str())
 
 #
 #

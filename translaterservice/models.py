@@ -10,10 +10,8 @@ class TranslateRecord(models.Model):
     quest_num = models.IntegerField(default=1)
     src_content = models.TextField()
     display_content = models.TextField()
-    is_rembered = models.BooleanField(default=False)
+    is_remembered = models.BooleanField(default=False)
     is_deleted = models.BooleanField(default=False)
 
     def __str__(self):
         return self.words_text + "---" + self.display_content
-
-

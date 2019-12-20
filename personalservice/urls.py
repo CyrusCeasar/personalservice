@@ -23,17 +23,18 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
 
-    path('translate_record/list', translate_records.list),
+    path('translate_record/list', translate_records.record_list),
     path('translate_record/query', translate_records.query),
     path('translate_record/delete', translate_records.delete),
     path('translate_record/remove', translate_records.remove),
     path('translate_record/deleted_list', translate_records.deleted_list),
-    path('translate_record/remebered_list', translate_records.rembered_list),
-    path('translate_record/rembered', translate_records.rembered),
+    path('translate_record/remembered_list', translate_records.remembered_list),
+    path('translate_record/remembered', translate_records.remembered),
 
-    path('user/hello', user.hello),
-    path('user/createUserStep1', user.createUserStep1),
-    path('user/createUserStep2', user.createUserStep2),
+    path('user/create_user_step1', user.create_user_step1),
+    path('user/create_user_step2', user.create_user_step2),
+    path('user/change_pwd_step1', user.change_pwd_step1),
+    path('user/change_pwd_step2', user.change_pwd_step2),
     path('user/all', user.users),
 
     path('server/info', sever_manger.ServerView.as_view(), name='get')

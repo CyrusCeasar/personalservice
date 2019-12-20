@@ -18,6 +18,6 @@ class Result:
     def __str__(self):
         print(self.result_code + "---" + self.result_msg)
 
-    def getJsonStr(self, obj=None):
-        dict = {'result_msg': self.result_msg, 'result_code': self.result_code, 'data': obj}
-        return dict
+    def get_json_str(self, obj=None):
+        d = {'result_msg': self.result_msg, 'result_code': self.result_code, 'data': obj}
+        return d
