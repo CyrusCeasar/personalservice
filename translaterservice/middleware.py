@@ -1,4 +1,3 @@
-
 from django.conf import settings
 
 from translaterservice.models import Device
@@ -59,11 +58,8 @@ class DeviceMiddleWare:
         device_id = headers.get('Device-Id')
         device_type = headers.get('Device-Type')
         if device_id and device_type:
-            obj, created = Device.objects.filter(device_id=device_id).get_or_create()
-            if created:
-                obj.device_type = device_type
-                obj.device_id = device_id
-                obj.save()
+            obj, created = Device.objects.filter(device_id=device_id).get_or_create(device_id=device_id,
+                                                                                    device_type=device_type)
 
         response = self.get_response(request)
 
