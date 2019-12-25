@@ -16,15 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from translaterservice import translate_records, user
-from rest_framework.authtoken.views import obtain_auth_token
 from translaterservice import sever_manger
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
+    path('login/', user.CustomObtainAuthToken.as_view()),
 
     path('translate_record/list', translate_records.record_list),
-    path('translate_record/query', translate_records.query),
+    path('translate_record/lookup', translate_records.lookup),
     path('translate_record/delete', translate_records.delete),
     path('translate_record/remove', translate_records.remove),
     path('translate_record/deleted_list', translate_records.deleted_list),
