@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '6smjm#(ylj$^r_dh=yv4@807_oz67j#d07xe_j40rvcjg8w#57'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = (sys.argv[1] == 'runserver')
+DEBUG = (sys.argv.__len__() >= 2 and sys.argv[1] == 'runserver')
 
 ALLOWED_HOSTS = ['103.91.67.151', '127.0.0.1']
 
@@ -56,12 +56,12 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-   # 'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    #'translaterservice.middleware.StackOverflowMiddleware',
+    # 'translaterservice.middleware.StackOverflowMiddleware',
     'translaterservice.middleware.DeviceMiddleWare'
 
 ]
