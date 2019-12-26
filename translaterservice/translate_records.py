@@ -96,7 +96,7 @@ def remembered_list(request):
 
 
 def record_list(request):
-    page = request.GET.get('page')
+    page = int(request.GET.get('page'))
     t = int(request.GET.get('type'))
 
     device_id = request.headers.get(DEVICE_ID)
@@ -111,8 +111,8 @@ def record_list(request):
 
     lists = qst.values('id', 'lookup_amount', 'last_lookup_time',
                        'vocabulary__src_content', 'vocabulary__display_content',
-                       'vocabulary__word')
-    response = JsonResponse(get_page(lists, page))
+                       'vocabulary__word')[20*(page-1):20*page]
+    response = JsonResponse(Result(RESULT_SUCCESS, "查询成功").get_json_str(getlist(lists)))
     return response
 
 

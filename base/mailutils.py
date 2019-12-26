@@ -14,7 +14,7 @@ def send_mail(to, subject, email_body):
                            "mime-version: 1.0",
                            "content-type: text/html"])
     # body_of_email can be plaintext or html!
-    content = headers + "\r\n\r\n" + email_body
+    content = headers + "\r\n\r\n" + str(email_body)
     session.sendmail(settings.EMAIL_HOST_USER, recipient_list, content)
 
 # def sendEmail(to,subject,message):
