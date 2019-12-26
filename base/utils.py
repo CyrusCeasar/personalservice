@@ -14,5 +14,6 @@ def get_page(obj, page, pagesize=20):
     except PageNotAnInteger:
         result_list = paginator.page(1)
     except EmptyPage:
-        result_list = paginator.page(paginator.num_pages)
+        result_list = []
     return Result(RESULT_SUCCESS, "查询成功").get_json_str(getlist(result_list))
+
