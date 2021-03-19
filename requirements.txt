@@ -1,7 +1,7 @@
 asgiref==3.2.3
 Django==3.0
 django-redis==4.11.0
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 pyotp==2.3.0
 pytz==2019.3
 redis==3.3.11
